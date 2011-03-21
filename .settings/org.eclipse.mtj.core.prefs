@@ -1,0 +1,6 @@
+#Mon Aug 23 11:22:47 BST 2010
+eclipse.preferences.version=1
+pkg_use_project=true
+preverify_config_location=specified
+preverify_config_value=CLDC
+preverify_type=preverify_proguard

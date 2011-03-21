@@ -1,0 +1,7 @@
+MIDlet-Version: 1.1.0
+MIDlet-Vendor: The Mixed Reality Lab, The University of Nottingham
+MIDlet-Jar-URL: j2meclient.jar
+MicroEdition-Configuration: CLDC-1.0
+MicroEdition-Profile: MIDP-2.0
+MIDlet-1: DarkForest,,darkforest.mobile.DarkForest
+MIDlet-Name: Darkforest J2ME Client

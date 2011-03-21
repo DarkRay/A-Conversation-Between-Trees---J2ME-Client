@@ -1,0 +1,89 @@
+<project name="darkforest" default="j2mepolish">
+	
+<property name="wtk.home" value="/opt/j2mewtk" />	
+<property name="polish.home" value="/opt/j2mepolish" />
+	
+<taskdef
+		name="j2mepolish" 
+	    classname="de.enough.polish.ant.PolishTask">
+	<classpath>
+		<fileset dir="${polish.home}/lib">
+			<include name="enough-j2mepolish-build.jar" />
+			<include name="jdom.jar" />
+		</fileset>
+	</classpath>
+</taskdef>
+
+<target name="test" >
+	<property name="test" value="true" />
+</target>
+		
+<target name="init">
+  	<property name="test" value="false" />
+</target>
+ 
+<!-- In this target the J2ME Polish task is used.             -->
+<!-- It has 3 sections:                                       -->
+<!--    1. The info-section defines some general information  -->
+<!--    2. The deviceRequirements-section chooses the devices -->
+<!--       for which the application is optimized.            -->
+<!--    3. The build-section controls the actual build        -->
+<!--       process.                                           -->	
+<target name="j2mepolish" 
+		depends="init"
+		description="This is the controller for the J2ME build process.">
+	
+	<j2mepolish>
+		
+		<!-- general settings -->
+		<info
+				name="DarkForest"
+				version="1.0.0"
+				description="DarkForest datalogging application"
+				vendorName="The Mixed Reality Lab, The University of Nottingham"
+				infoUrl="http://www.darkforest.tv"
+				jarName="darkforest.jar"
+				jarUrl="${polish.jarName}"
+				copyright="Copyright 2010 Mixed Reality Lab. All rights reserved."
+				deleteConfirm="Are you sure you wish to remove this application?" />
+		
+		<deviceRequirements if="test">
+			<requirement name="Identifier" value="Nokia/N95" />
+		</deviceRequirements>
+		<deviceRequirements unless="test">
+			<requirement name="Identifier" value="Nokia/N95" />
+			<!-- on could use other devices for real builds, e.g. :
+			<or>
+				<and>
+					<requirement name="JavaPackage" 
+					 value="nokia-ui" />
+					<requirement name="BitsPerPixel" 
+					 value="16+" />
+				</and>
+			</or>
+			 -->
+		</deviceRequirements>
+		
+		<build
+				imageLoadStrategy="background"
+				fullscreen="menu"
+				usePolishGui="true"
+				resDir="res"
+				srcdir="src">
+			<midlet class="darkforest.mobile.DarkForest" name="DarkForest" />
+			<obfuscator unless="test" name="ProGuard" />
+			<debug if="test" showLogOnError="true" verbose="true" level="error">
+				<filter pattern="darkforest.mobile.*" level="debug" />
+			</debug>
+		</build>
+	
+	</j2mepolish>
+	
+</target>
+
+<target name="clean" description="Cleans the build environment">
+	<delete dir="build" />
+	<delete dir="dist" />
+</target>
+
+</project>
